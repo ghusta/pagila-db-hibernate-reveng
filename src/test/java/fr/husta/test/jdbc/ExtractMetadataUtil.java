@@ -121,6 +121,7 @@ public class ExtractMetadataUtil
             // int sqlDataType = tablesRS.getInt("SQL_DATA_TYPE");
             int columnSize = tablesRS.getInt("COLUMN_SIZE");
             int decimalDigits = tablesRS.getInt("DECIMAL_DIGITS");
+            // for NUMERIC types, columnSize = precision; decimalDigits = scale
             int numPrecRadix = tablesRS.getInt("NUM_PREC_RADIX");
             int intNullable = tablesRS.getInt("NULLABLE");
             String nullable = nullableToString(intNullable);
@@ -134,18 +135,18 @@ public class ExtractMetadataUtil
             // SOURCE_DATA_TYPE short => source type of a distinct type or user-generated Ref type,
             // SQL type from java.sql.Types (null if DATA_TYPE isn't DISTINCT or user-generated REF)
             Short sourceDataRef = tablesRS.getShort("SOURCE_DATA_TYPE");
-            JDBCType sourceDataRefJdbcType = null;
+            JDBCType sourceDataRefJdbcType;
             if (tablesRS.wasNull())
             {
-                sourceDataRef = null;
+                sourceDataRefJdbcType = null;
             }
             else
             {
                 sourceDataRefJdbcType = JDBCType.valueOf(sourceDataRef);
             }
 
-            String sqlTypeSize = String.format("%s(%s)", typeName, colSizeToString(columnSize));
-            listCols.add(String.format("%-25s [ %-20s - JDBC TYPE: %-10s - NULLABLE: %3s - DEFAULT: %5s - AUTOINC: %3s%s] %s", columnName, sqlTypeSize,
+            String sqlTypeSize = String.format("%s(%s)", typeName, colSizeToString(columnSize, decimalDigits));
+            listCols.add(String.format("%-25s [ %-20s - JDBC TYPE: %-10s - NULLABLE: %5s - DEFAULT: %5s - AUTOINC: %3s%s] %s", columnName, sqlTypeSize,
                     jdbcType, strIsNullable, (defaultValue == null ? "" : defaultValue), strIsAutoInc,
                     (sourceDataRefJdbcType == null ? "" : " - DATA REF TYPE: " + sourceDataRefJdbcType),
                     (remarks == null ? "" : " -- Comment : " + remarks)));
@@ -192,7 +193,14 @@ public class ExtractMetadataUtil
         return listTypes;
     }
 
-    private static String colSizeToString(int size) throws SQLException
+    /**
+     *
+     * @param size
+     * @param decimalDigits
+     * @return Column size, or (precision, scale) for numeric types.
+     * @throws SQLException
+     */
+    private static String colSizeToString(int size, int decimalDigits) throws SQLException
     {
         if (size == UNKNOWN_LENGTH)
         {
@@ -200,7 +208,14 @@ public class ExtractMetadataUtil
         }
         else
         {
-            return String.valueOf(size);
+            if (decimalDigits == 0)
+            {
+                return String.valueOf(size);
+            }
+            else
+            {
+                return String.format("%d, %d", size, decimalDigits);
+            }
         }
     }
 
