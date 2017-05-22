@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="PU-TEST">
+        <!-- See also : http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.misc.entity-scanning -->
+        <!--<class>fr.husta.test.domain.Film</class>-->
+
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect" />
+
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+            <property name="hibernate.default_schema" value="public"/>
+
+            <!-- Pour test / debug -->
+            <property name="hibernate.generate_statistics" value="true"/>
+
+        </properties>
+    </persistence-unit>
+
+</persistence>

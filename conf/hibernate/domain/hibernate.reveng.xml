@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering SYSTEM
+        "file:conf/hibernate/dtd/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+
+    <schema-selection match-schema="public"/>
+
+    <type-mapping>
+        <!--<sql-type jdbc-type="NUMERIC" precision="1" hibernate-type="int" not-null="true"/>-->
+        <!--<sql-type jdbc-type="NUMERIC" precision="1" hibernate-type="integer" not-null="false"/>-->
+        <!--<sql-type jdbc-type="NUMERIC" precision="6" scale="0" hibernate-type="int" not-null="true"/>-->
+        <!--<sql-type jdbc-type="NUMERIC" precision="6" scale="0" hibernate-type="integer" not-null="false"/>-->
+        <!--<sql-type jdbc-type="NUMERIC" precision="11" scale="0" hibernate-type="long" not-null="true"/>-->
+        <!--<sql-type jdbc-type="NUMERIC" precision="11" scale="0" hibernate-type="java.lang.Long" not-null="false"/>-->
+
+        <sql-type jdbc-type="DATE" hibernate-type="java.time.LocalDate"/>
+        <sql-type jdbc-type="TIMESTAMP" hibernate-type="java.time.LocalDateTime"/>
+        <!-- ne marche pas avec Postgres driver 42.0 -->
+        <sql-type jdbc-type="TIMESTAMP_WITH_TIMEZONE" hibernate-type="java.time.ZonedDateTime"/>
+
+    </type-mapping>
+
+    <table-filter match-name="film"></table-filter>
+    <table-filter match-name="language"></table-filter>
+    <table-filter match-name="category"></table-filter>
+    <table-filter match-name="film_category"></table-filter>
+
+    <table name="film" schema="public">
+        <primary-key>
+            <!-- See : org.hibernate.id.enhanced.SequenceStyleGenerator.SEQUENCE_PARAM -->
+            <generator class="sequence">
+                <param name="sequence_name">film_film_id_seq</param>
+            </generator>
+            <key-column name="film_id"/>
+        </primary-key>
+
+        <column name="release_year" jdbc-type="DISTINCT" type="integer">
+            <!-- TYPE PG CUSTOM = YEAR -->
+            <meta attribute="gen-finder"/>
+            <meta attribute="gen-finder-between"/>
+        </column>
+        <column name="title">
+            <meta attribute="gen-finder"/>
+            <meta attribute="gen-finder-like"/>
+        </column>
+        <column name="rating">
+            <meta attribute="gen-finder"/>
+        </column>
+        
+        <column name="special_features" exclude="true">
+        </column>
+        <column name="fulltext" exclude="true">
+        </column>
+    </table>
+
+    <table name="category" schema="public">
+        <primary-key>
+            <!-- See : org.hibernate.id.enhanced.SequenceStyleGenerator.SEQUENCE_PARAM -->
+            <generator class="sequence">
+                <param name="sequence_name">category_category_id_seq</param>
+            </generator>
+            <key-column name="category_id"/>
+        </primary-key>
+        <column name="name">
+            <meta attribute="gen-finder"/>
+            <meta attribute="gen-finder-like"/>
+        </column>
+    </table>
+
+    <table name="language" schema="public">
+        <primary-key>
+            <generator class="sequence">
+                <param name="sequence_name">language_language_id_seq</param>
+            </generator>
+            <key-column name="language_id"/>
+        </primary-key>
+    </table>
+
+</hibernate-reverse-engineering>

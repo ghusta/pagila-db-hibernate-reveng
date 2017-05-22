@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Generation with Hibernate Tools" basedir="." default="infos-path">
+
+    <property environment="env"/>
+
+    <property name="jdk5" value="true"/>
+    <property name="ejb3" value="true"/>
+
+    <property name="jdk8" value="true"/>
+
+    <!-- - - - - - - - - - - - - - - - - -
+        target: gen-hib-entities
+     - - - - - - - - - - - - - - - - - -->
+    <target name="gen-hib-entities">
+        <taskdef name="hibernatetool"
+                 classname="org.hibernate.tool.ant.HibernateToolTask"
+                 classpath="plugin_classpath"/>
+
+        <echo message="Generation fichiers POJO (sources Java) "/>
+        <hibernatetool destdir="${dest_dir}">
+            <!-- au moins 1 config -->
+            <jdbcconfiguration
+                    configurationfile="${basedir}/conf/hibernate/hibernate_no_mapping.cfg.xml"
+                    revengfile="${basedir}/conf/hibernate/${config_modele}/hibernate.reveng.xml"
+                    packagename="${base_package}.domain"
+                    detectmanytomany="true"
+                    detectoptimisticlock="true"
+                    detectonetoone="true">
+            </jdbcconfiguration>
+
+            <classpath>
+                <!-- Pour user types éventuellement -->
+                <path location="plugin_classpath"/>
+            </classpath>
+
+            <!--<property key="hibernatetool.Ejb3CustomTypeAnnotation.toolclass" value="xxx.hibernate.reveng.util.Ejb3CustomTypeAnnotation"/>-->
+            <!--<property key="useCustomTypes" value="true"/>-->
+
+            <!-- au moins 1 exporter -->
+            <hbm2java jdk5="${jdk5}" ejb3="${ejb3}"
+                      destdir="${dest_dir}"/>
+        </hibernatetool>
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+        target: gen-hib-entities
+    - - - - - - - - - - - - - - - - - -->
+    <target name="gen-hib-daos">
+        <taskdef name="hibernatetool"
+                 classname="org.hibernate.tool.ant.HibernateToolTask"
+                 classpath="plugin_classpath"/>
+
+        <echo message="Generation fichiers DAO (sources Java) "/>
+        <hibernatetool destdir="${dest_dir}">
+            <!-- au moins 1 config -->
+            <jdbcconfiguration
+                    configurationfile="${basedir}/conf/hibernate/hibernate_no_mapping.cfg.xml"
+                    revengfile="${basedir}/conf/hibernate/${config_modele}/hibernate.reveng.xml"
+                    packagename="${base_package}.domain"
+                    detectmanytomany="true"
+                    detectoptimisticlock="true"
+                    detectonetoone="true">
+            </jdbcconfiguration>
+
+            <classpath>
+                <!-- Pour user types éventuellement -->
+                <path location="plugin_classpath"/>
+            </classpath>
+
+            <!--<property key="hibernatetool.Ejb3CustomTypeAnnotation.toolclass" value="xxx.util.hibernate.reveng.util.Ejb3CustomTypeAnnotation"/>-->
+            <!--<property key="useCustomTypes" value="true"/>-->
+
+            <property key="jdk5" value="${jdk5}"/>
+            <property key="ejb3" value="${ejb3}"/>
+            <property key="daoPackage" value="${base_package}.dao"/>
+
+            <!-- au moins 1 exporter -->
+            <hbmtemplate
+                    filePattern="{package-name}/../dao/{class-name}Repository.java"
+                    destdir="${dest_dir}"
+                    forEach="entity"
+                    templatepath="${basedir}/templates"
+                    template="dao/JpaRepository.ftl"/>
+        </hibernatetool>
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: infos-path                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="infos-path">
+        <echo message="compile classpath : ${compile_classpath}"/>
+        <echo message="runtime classpath : ${runtime_classpath}"/>
+        <echo message="test classpath    : ${test_classpath}"/>
+        <echo message="plugin classpath  : ${plugin_classpath}"/>
+
+        <echo message="Repertoire sortie : ${dest_dir}"/>
+        <echo message="Project GroupId   : ${project_groupId}"/>
+    </target>
+
+</project>
