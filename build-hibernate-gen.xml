@@ -38,7 +38,8 @@
 
             <!-- au moins 1 exporter -->
             <hbm2java jdk5="${jdk5}" ejb3="${ejb3}"
-                      destdir="${dest_dir}"/>
+                      destdir="${dest_dir}"
+                      templatepath="${basedir}/templates"/>
         </hibernatetool>
 
     </target>
