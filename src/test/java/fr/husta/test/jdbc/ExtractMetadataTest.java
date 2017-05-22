@@ -67,6 +67,10 @@ public class ExtractMetadataTest
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "film");
         System.out.println("FILM => \n" + listStringToBullet(colsList));
 
+        System.out.println("--- LISTE DES FK / TABLE ---");
+        colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, "public", "film");
+        System.out.println("FK FILM => \n" + listStringToBullet(colsList));
+
         System.out.println("--- LISTE DES COLONNES / TABLE ---");
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "category");
         System.out.println("CATEGORY => \n" + listStringToBullet(colsList));
@@ -74,6 +78,30 @@ public class ExtractMetadataTest
         System.out.println("--- LISTE DES COLONNES / TABLE ---");
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "language");
         System.out.println("LANGUAGE => \n" + listStringToBullet(colsList));
+
+        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "actor");
+        System.out.println("ACTOR => \n" + listStringToBullet(colsList));
+
+        System.out.println("--- LISTE DES FK / TABLE ---");
+        colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, "public", "actor");
+        System.out.println("FK ACTOR => \n" + listStringToBullet(colsList));
+
+        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "film_actor");
+        System.out.println("FILM_ACTOR => \n" + listStringToBullet(colsList));
+
+        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "country");
+        System.out.println("COUNTRY => \n" + listStringToBullet(colsList));
+
+        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "city");
+        System.out.println("CITY => \n" + listStringToBullet(colsList));
+
+        System.out.println("--- LISTE DES FK / TABLE ---");
+        colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, "public", "city");
+        System.out.println("FK CITY => \n" + listStringToBullet(colsList));
 
         connection.close();
     }

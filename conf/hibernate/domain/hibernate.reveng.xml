@@ -24,6 +24,10 @@
     <table-filter match-name="language"></table-filter>
     <table-filter match-name="category"></table-filter>
     <table-filter match-name="film_category"></table-filter>
+    <table-filter match-name="actor"></table-filter>
+    <table-filter match-name="film_actor"></table-filter>
+    <table-filter match-name="city"></table-filter>
+    <table-filter match-name="country"></table-filter>
 
     <table name="film" schema="public">
         <primary-key>
@@ -73,6 +77,33 @@
                 <param name="sequence_name">language_language_id_seq</param>
             </generator>
             <key-column name="language_id"/>
+        </primary-key>
+    </table>
+
+    <table name="actor" schema="public">
+        <primary-key>
+            <generator class="sequence">
+                <param name="sequence_name">actor_actor_id_seq</param>
+            </generator>
+            <key-column name="actor_id"/>
+        </primary-key>
+    </table>
+
+    <table name="country" schema="public">
+        <primary-key>
+            <generator class="sequence">
+                <param name="sequence_name">country_country_id_seq</param>
+            </generator>
+            <key-column name="country_id"/>
+        </primary-key>
+    </table>
+
+    <table name="city" schema="public">
+        <primary-key>
+            <generator class="sequence">
+                <param name="sequence_name">city_city_id_seq</param>
+            </generator>
+            <key-column name="city_id"/>
         </primary-key>
     </table>
 

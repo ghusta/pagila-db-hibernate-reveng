@@ -154,6 +154,70 @@ public class ExtractMetadataUtil
         return listCols;
     }
 
+    public static List<String> getTablePrimaryKeysList(final Connection cnx, final String schema, final String table)
+            throws SQLException
+    {
+        String catalog = "";
+        DatabaseMetaData metaData = cnx.getMetaData();
+        ResultSet pkRS = metaData.getPrimaryKeys(catalog, schema, table);
+
+        List<String> listPKs = new ArrayList<>();
+        while (pkRS.next())
+        {
+            String columnName = pkRS.getString("COLUMN_NAME");
+            short keySeq = pkRS.getShort("KEY_SEQ");
+            String pkName = pkRS.getString("PK_NAME");
+
+            listPKs.add(String.format("%s %s",
+                    columnName, ( pkName == null ? "" : "PK: " + pkName) ));
+        }
+        return listPKs;
+    }
+
+    public static List<String> getTableImportedForeignKeysList(final Connection cnx, final String schema, final String table)
+            throws SQLException
+    {
+        String catalog = "";
+        DatabaseMetaData metaData = cnx.getMetaData();
+        ResultSet fkRS = metaData.getImportedKeys(catalog, schema, table);
+
+        List<String> listFKs = new ArrayList<>();
+        while (fkRS.next())
+        {
+            String fkTableName = fkRS.getString("FKTABLE_NAME");
+            String fkColumnName = fkRS.getString("FKCOLUMN_NAME");
+            String pkTableName = fkRS.getString("PKTABLE_NAME");
+            String pkColumnName = fkRS.getString("PKCOLUMN_NAME");
+
+            listFKs.add(String.format("%s.%s (FK) => %s.%s (PK)",
+                    fkTableName, fkColumnName,
+                    pkTableName, pkColumnName));
+        }
+        return listFKs;
+    }
+
+    public static List<String> getTableExportedForeignKeysList(final Connection cnx, final String schema, final String table)
+            throws SQLException
+    {
+        String catalog = "";
+        DatabaseMetaData metaData = cnx.getMetaData();
+        ResultSet fkRS = metaData.getExportedKeys(catalog, schema, table);
+
+        List<String> listFKs = new ArrayList<>();
+        while (fkRS.next())
+        {
+            String fkTableName = fkRS.getString("FKTABLE_NAME");
+            String fkColumnName = fkRS.getString("FKCOLUMN_NAME");
+            String pkTableName = fkRS.getString("PKTABLE_NAME");
+            String pkColumnName = fkRS.getString("PKCOLUMN_NAME");
+
+            listFKs.add(String.format("%s.%s (FK) => %s.%s (PK)",
+                    fkTableName, fkColumnName,
+                    pkTableName, pkColumnName));
+        }
+        return listFKs;
+    }
+
     public static List<String> getTableTypeList(final Connection cnx) throws SQLException
     {
         DatabaseMetaData metaData = cnx.getMetaData();
