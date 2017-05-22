@@ -90,12 +90,17 @@
     </table>
 
     <table name="country" schema="public">
+        <!-- Annotations for Hibernate Search -->
+        <meta attribute="hs-indexed"/>
         <primary-key>
             <generator class="sequence">
                 <param name="sequence_name">country_country_id_seq</param>
             </generator>
             <key-column name="country_id"/>
         </primary-key>
+        <column name="country">
+            <meta attribute="hs-field"/>
+        </column>
     </table>
 
     <table name="city" schema="public">
