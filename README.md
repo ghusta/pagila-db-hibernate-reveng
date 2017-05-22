@@ -10,7 +10,7 @@ As a result, code will be generated in _target/generated-sources/hibernate_.
 
 You can use a docker container, like this one :
 
-`docker run -d -pxxxx:5432 mujz/pagila`
+`docker run -d -pxxxx:5432 --name pagila-db mujz/pagila`
 
 ## Templates (FreeMarker)
 
