@@ -71,6 +71,10 @@ public class ExtractMetadataTest
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "category");
         System.out.println("CATEGORY => \n" + listStringToBullet(colsList));
 
+        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "language");
+        System.out.println("LANGUAGE => \n" + listStringToBullet(colsList));
+
         connection.close();
     }
 

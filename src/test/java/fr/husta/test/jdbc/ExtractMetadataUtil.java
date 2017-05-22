@@ -16,7 +16,11 @@ public class ExtractMetadataUtil
     public static final String CHAR_TIRET_LONG = "\u2014";
     public static final String CHAR_TIRET_MOYEN = "\u2013";
 
-    private static final Integer POSTGRES_TYPE_UNLIMITED_LENGTH = Integer.MAX_VALUE;
+    // Voir aussi const : org.hibernate.cfg.reveng.SQLTypeMapping
+    public static final int UNKNOWN_LENGTH = Integer.MAX_VALUE;
+    public static final int UNKNOWN_PRECISION = Integer.MAX_VALUE;
+    public static final int UNKNOWN_SCALE = Integer.MAX_VALUE;
+    public static final Boolean UNKNOWN_NULLABLE = null;
 
     public static DatabaseMetaData getMetaData(final Connection cnx) throws SQLException
     {
@@ -140,7 +144,7 @@ public class ExtractMetadataUtil
                 sourceDataRefJdbcType = JDBCType.valueOf(sourceDataRef);
             }
 
-            String sqlTypeSize = String.format("%s(%s)", typeName, colSizeToString(metaData, columnSize));
+            String sqlTypeSize = String.format("%s(%s)", typeName, colSizeToString(columnSize));
             listCols.add(String.format("%-25s [ %-20s - JDBC TYPE: %-10s - NULLABLE: %3s - DEFAULT: %5s - AUTOINC: %3s%s] %s", columnName, sqlTypeSize,
                     jdbcType, strIsNullable, (defaultValue == null ? "" : defaultValue), strIsAutoInc,
                     (sourceDataRefJdbcType == null ? "" : " - DATA REF TYPE: " + sourceDataRefJdbcType),
@@ -149,19 +153,50 @@ public class ExtractMetadataUtil
         return listCols;
     }
 
-    private static String colSizeToString(final DatabaseMetaData databaseMetaData, int size) throws SQLException
+    public static List<String> getTableTypeList(final Connection cnx) throws SQLException
     {
-        String databaseProductName = databaseMetaData.getDatabaseProductName();
-        if ("PostgreSQL".equals(databaseProductName))
+        DatabaseMetaData metaData = cnx.getMetaData();
+        ResultSet typesRS = metaData.getTableTypes();
+
+        List<String> listTableTypes = new ArrayList<>();
+        while (typesRS.next())
         {
-            if (size == POSTGRES_TYPE_UNLIMITED_LENGTH)
-            {
-                return CHAR_INFINI;
-            }
-            else
-            {
-                return String.valueOf(size);
-            }
+            String tableType = typesRS.getString("TABLE_TYPE");
+            listTableTypes.add(tableType);
+        }
+        return listTableTypes;
+    }
+
+    public static List<String> getUserDefinedTypeList(final Connection cnx, final String schemaPattern)
+            throws SQLException
+    {
+        String catalog = "";
+        String typeNamePattern = "%";
+        DatabaseMetaData metaData = cnx.getMetaData();
+        ResultSet typeNameRS = metaData.getSuperTypes(catalog, schemaPattern, typeNamePattern);
+
+        List<String> listTypes = new ArrayList<>();
+        while (typeNameRS.next())
+        {
+            String typeCat = typeNameRS.getString("TYPE_CAT");
+            String typeSchem = typeNameRS.getString("TYPE_SCHEM");
+            String typeName = typeNameRS.getString("TYPE_NAME");
+            String supertypeCat = typeNameRS.getString("SUPERTYPE_CAT");
+            String supertypeSchem = typeNameRS.getString("SUPERTYPE_SCHEM");
+            String supertypeName = typeNameRS.getString("SUPERTYPE_NAME");
+
+            listTypes.add(String.format("%s %s %s => %s %s %s",
+                    typeCat, typeSchem, typeName,
+                    supertypeCat, supertypeSchem, supertypeName));
+        }
+        return listTypes;
+    }
+
+    private static String colSizeToString(int size) throws SQLException
+    {
+        if (size == UNKNOWN_LENGTH)
+        {
+            return CHAR_INFINI;
         }
         else
         {
