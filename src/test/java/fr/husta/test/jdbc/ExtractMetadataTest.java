@@ -1,5 +1,6 @@
 package fr.husta.test.jdbc;
 
+import fr.husta.test.ansi.AnsiColor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,12 +53,12 @@ public class ExtractMetadataTest
 
         System.out.println();
         List<String> schemaList = ExtractMetadataUtil.getSchemaList(connection);
-        System.out.println("--- LISTE DES SCHEMAS ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES SCHEMAS ---"));
         System.out.println(schemaList);
         System.out.println();
 
         List<String> tableList = ExtractMetadataUtil.getTableList(connection, "public");
-        System.out.println("--- LISTE DES TABLES ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES TABLES ---"));
         System.out.println(tableList);
         System.out.println();
 
