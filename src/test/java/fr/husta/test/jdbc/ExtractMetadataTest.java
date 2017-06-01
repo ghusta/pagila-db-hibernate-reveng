@@ -31,7 +31,7 @@ public class ExtractMetadataTest
     @Test
     public void testDatabaseMetadata() throws Exception
     {
-        System.out.println("--- TEST : EXTRACTION METADATA JDBC ---");
+        System.out.println(AnsiColor.colorizeDefault("--- TEST : EXTRACTION METADATA JDBC ---"));
 
         String jdbcUrl = dbProperties.getProperty("db.url");
         String jdbcUsername = dbProperties.getProperty("db.username");
@@ -64,45 +64,55 @@ public class ExtractMetadataTest
 
         List<String> colsList;
 
-        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "film");
-        System.out.println("FILM => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("FILM => ", AnsiColor.FG_GREEN));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES FK / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES FK / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, "public", "film");
-        System.out.println("FK FILM => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("FK FILM => ", AnsiColor.FG_YELLOW));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "category");
-        System.out.println("CATEGORY => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("CATEGORY => ", AnsiColor.FG_GREEN));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "language");
-        System.out.println("LANGUAGE => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("LANGUAGE => ", AnsiColor.FG_GREEN));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "actor");
-        System.out.println("ACTOR => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("ACTOR => ", AnsiColor.FG_GREEN));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES FK / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES FK / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, "public", "actor");
-        System.out.println("FK ACTOR => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("FK ACTOR => ", AnsiColor.FG_YELLOW));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "film_actor");
-        System.out.println("FILM_ACTOR => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("FILM_ACTOR => ", AnsiColor.FG_GREEN));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "country");
-        System.out.println("COUNTRY => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("COUNTRY => ", AnsiColor.FG_GREEN));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES COLONNES / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableColumnList(connection, "public", "city");
-        System.out.println("CITY => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("CITY => ", AnsiColor.FG_GREEN));
+        System.out.println(listStringToBullet(colsList));
 
-        System.out.println("--- LISTE DES FK / TABLE ---");
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES FK / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, "public", "city");
-        System.out.println("FK CITY => \n" + listStringToBullet(colsList));
+        System.out.println(AnsiColor.colorize("FK CITY => ", AnsiColor.FG_YELLOW));
+        System.out.println(listStringToBullet(colsList));
 
         connection.close();
     }

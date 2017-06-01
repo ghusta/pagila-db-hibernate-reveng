@@ -17,14 +17,14 @@ public abstract class AnsiColor
     private static final int ATTR_REVERSE = 7;
     // private static final int ATTR_HIDDEN = 8;
 
-    // private static final int FG_BLACK = 30;
-    private static final int FG_RED = 31;
-    private static final int FG_GREEN = 32;
-    // private static final int FG_YELLOW = 33;
-    private static final int FG_BLUE = 34;
-    private static final int FG_MAGENTA = 35;
-    private static final int FG_CYAN = 36;
-    // private static final int FG_WHITE = 37;
+    public static final int FG_BLACK = 30;
+    public static final int FG_RED = 31;
+    public static final int FG_GREEN = 32;
+    public static final int FG_YELLOW = 33;
+    public static final int FG_BLUE = 34;
+    public static final int FG_MAGENTA = 35;
+    public static final int FG_CYAN = 36;
+    public static final int FG_WHITE = 37;
 
     // private static final int BG_BLACK = 40;
     // private static final int BG_RED = 41;
