@@ -169,7 +169,7 @@ public class ExtractMetadataUtil
             String pkName = pkRS.getString("PK_NAME");
 
             listPKs.add(String.format("%s %s",
-                    columnName, ( pkName == null ? "" : "PK: " + pkName) ));
+                    columnName, (pkName == null ? "" : "PK: " + pkName)));
         }
         return listPKs;
     }
@@ -258,7 +258,6 @@ public class ExtractMetadataUtil
     }
 
     /**
-     *
      * @param size
      * @param decimalDigits
      * @return Column size, or (precision, scale) for numeric types.
