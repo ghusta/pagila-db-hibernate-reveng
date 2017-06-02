@@ -1,5 +1,7 @@
-${pojo.getPackageDeclaration()}
 // Generated ${date} by Hibernate Tools ${version}
+// and FreeMarker ${.version}
+
+${pojo.getPackageDeclaration()}
 
 <#assign classbody>
 <#include "PojoTypeDeclaration.ftl"/> {
@@ -26,4 +28,3 @@ ${pojo.getPackageDeclaration()}
 
 ${pojo.generateImports()}
 ${classbody}
-
