@@ -31,7 +31,8 @@ public interface ${entityName}Repository
 </#if>
 <#-- Générer un finder JPA pour cette property -->
 <#-- Doc Spring Data JPA : Defining query methods (https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details) -->
-<#foreach property in pojo.getAllPropertiesIterator()><#if c2j.hasMetaAttribute(property, "gen-finder")>
+<#foreach property in pojo.getAllPropertiesIterator()>
+<#if c2j.hasMetaAttribute(property, "gen-finder")>
 <#assign propertyJavaType = pojo.getJavaTypeName(property, jdk5) />
 
     /**
@@ -85,6 +86,18 @@ public interface ${entityName}Repository
     ${pojo.importType("java.util.List")}<${entityName}> findBy${property.name?cap_first}(${propertyJavaType} ${property.name}, final ${pojo.importType("org.springframework.data.domain.Sort")} sort);
 
 </#if>
+<#if c2j.hasMetaAttribute(property, "gen-finder-ignore-case")>
+<#assign propertyJavaType = pojo.getJavaTypeName(property, jdk5) />
+
+    /**
+    * Finder pour : ${property.name}, insensible à la casse.
+    *
+    * @param ${property.name} critère recherche (égalité).
+    * @return {@link List} de résultats.
+    */
+    ${pojo.importType("java.util.List")}<${entityName}> findBy${property.name?cap_first}IgnoreCase(${propertyJavaType} ${property.name});
+
+</#if>
 <#if c2j.hasMetaAttribute(property, "gen-finder-java8-stream")>
     @${pojo.importType("org.springframework.data.jpa.repository.Query")}("select o from ${entityName} o where o.${property.name} = :${property.name}")
     ${pojo.importType("java.util.stream.Stream")}<${entityName}> streamBy${property.name?cap_first}(@${pojo.importType("org.springframework.data.repository.query.Param")}("${property.name}") ${propertyJavaType} ${property.name});
@@ -108,6 +121,26 @@ public interface ${entityName}Repository
      * Finder pour : ${property.name}, avec clause SQL LIKE, avec tri.
      */
     ${pojo.importType("java.util.List")}<${entityName}> findBy${property.name?cap_first}Like(${propertyJavaType} ${property.name}, final ${pojo.importType("org.springframework.data.domain.Sort")} sort);
+
+</#if>
+<#if c2j.hasMetaAttribute(property, "gen-finder-like-ignore-case")>
+    /**
+    * Finder pour : ${property.name}, avec clause SQL LIKE, insensible à la casse.
+    *
+    * @param ${property.name} critère recherche (like) : peut contenir des caractères génériques comme '%' ou '_'.
+    * @return Liste de résultats.
+    */
+    ${pojo.importType("java.util.List")}<${entityName}> findBy${property.name?cap_first}LikeIgnoreCase(${propertyJavaType} ${property.name});
+
+    /**
+    * Finder pour : ${property.name}, avec clause SQL LIKE, insensible à la casse, avec pagination.
+    */
+    ${pojo.importType("org.springframework.data.domain.Page")}<${entityName}> findBy${property.name?cap_first}LikeIgnoreCase(${propertyJavaType} ${property.name}, final ${pojo.importType("org.springframework.data.domain.Pageable")} pageable);
+
+    /**
+    * Finder pour : ${property.name}, avec clause SQL LIKE, insensible à la casse, avec tri.
+    */
+    ${pojo.importType("java.util.List")}<${entityName}> findBy${property.name?cap_first}LikeIgnoreCase(${propertyJavaType} ${property.name}, final ${pojo.importType("org.springframework.data.domain.Sort")} sort);
 
 </#if>
 <#if c2j.hasMetaAttribute(property, "gen-finder-between")>

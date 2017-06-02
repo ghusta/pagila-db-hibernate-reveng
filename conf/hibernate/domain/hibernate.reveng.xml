@@ -18,6 +18,10 @@
         <!-- ne marche pas avec Postgres driver 42.0 -->
         <sql-type jdbc-type="TIMESTAMP_WITH_TIMEZONE" hibernate-type="java.time.ZonedDateTime"/>
 
+        <!--
+        org.hibernate.tool.hbm2x.pojo.BasicPOJOClass.buildColumnAnnotation
+        Generation code pas en phase avec spec JPA pour val defaut @Column( precision, scale )...
+         -->
     </type-mapping>
 
     <table-filter match-name="film"></table-filter>
@@ -87,6 +91,17 @@
             </generator>
             <key-column name="actor_id"/>
         </primary-key>
+        <column name="first_name">
+            <meta attribute="gen-finder"/>
+            <meta attribute="gen-finder-ignore-case"/>
+            <meta attribute="gen-finder-like"/>
+            <meta attribute="gen-finder-like-ignore-case"/>
+        </column>
+        <column name="last_name">
+            <meta attribute="gen-finder"/>
+            <meta attribute="gen-finder-ignore-case"/>
+            <meta attribute="gen-finder-like"/>
+        </column>
     </table>
 
     <table name="country" schema="public">
