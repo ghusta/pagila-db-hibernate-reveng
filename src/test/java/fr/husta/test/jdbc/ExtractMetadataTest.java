@@ -58,10 +58,17 @@ public class ExtractMetadataTest
         System.out.println();
 
         String defaultSchema = "public";
+
         List<String> tableList = ExtractMetadataUtil.getTableList(connection, defaultSchema);
         System.out.println(AnsiColor.colorizeDefault("--- LISTE DES TABLES ---"));
         System.out.println(AnsiColor.colorize("SCHEMA => " + defaultSchema, AnsiColor.FG_RED));
         System.out.println(tableList);
+        System.out.println();
+
+        List<String> sequenceList = ExtractMetadataUtil.getSequenceList(connection, defaultSchema);
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES SEQUENCES ---"));
+        System.out.println(AnsiColor.colorize("SCHEMA => " + defaultSchema, AnsiColor.FG_RED));
+        System.out.println(sequenceList);
         System.out.println();
 
         List<String> colsList;
@@ -95,6 +102,13 @@ public class ExtractMetadataTest
         colsList = ExtractMetadataUtil.getTableColumnList(connection, defaultSchema, "actor");
         System.out.println(AnsiColor.colorize("ACTOR => ", AnsiColor.FG_GREEN));
         System.out.println(listStringToBullet(colsList));
+
+        // Test : sequence 'actor_actor_id_seq'
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
+        colsList = ExtractMetadataUtil.getTableColumnList(connection, defaultSchema, "actor_actor_id_seq");
+        System.out.println(AnsiColor.colorize("SEQ ! ACTOR_ACTOR_ID_SEQ => ", AnsiColor.FG_GREEN));
+        System.out.println(listStringToBullet(colsList));
+
 
         System.out.println(AnsiColor.colorizeDefault("--- LISTE DES FK / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, defaultSchema, "actor");

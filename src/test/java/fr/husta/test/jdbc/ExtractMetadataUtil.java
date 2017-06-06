@@ -101,6 +101,26 @@ public class ExtractMetadataUtil
         return listTables;
     }
 
+    public static List<String> getSequenceList(final Connection cnx, final String schemaPattern) throws SQLException
+    {
+        String catalog = "";
+        String tableNamePattern = "%";
+        String[] tableTypes = new String[]{"SEQUENCE"};
+        ResultSet tablesRS = cnx.getMetaData().getTables(catalog, schemaPattern, tableNamePattern, tableTypes);
+
+        List<String> listTables = new ArrayList<>();
+        while (tablesRS.next())
+        {
+            String tableName = tablesRS.getString("TABLE_NAME");
+            String tableType = tablesRS.getString("TABLE_TYPE");
+            String remarks = tablesRS.getString("REMARKS");
+
+            listTables.add(tableName);
+        }
+        return listTables;
+    }
+
+
     public static List<String> getTableColumnList(final Connection cnx, final String schemaPattern, final String tableNamePattern)
             throws SQLException
     {
@@ -218,6 +238,12 @@ public class ExtractMetadataUtil
         return listFKs;
     }
 
+    /**
+     * Table type list.
+     * @param cnx
+     * @return List containing TABLE, SEQUENCE, INDEX, VIEW, etc.
+     * @throws SQLException
+     */
     public static List<String> getTableTypeList(final Connection cnx) throws SQLException
     {
         DatabaseMetaData metaData = cnx.getMetaData();
@@ -316,25 +342,6 @@ public class ExtractMetadataUtil
                 break;
         }
         return res;
-    }
-
-    public static List<String> getSequenceList(final Connection cnx, final String schemaPattern) throws SQLException
-    {
-        String catalog = "";
-        String tableNamePattern = "%";
-        String[] tableTypes = new String[]{"SEQUENCE"};
-        ResultSet tablesRS = cnx.getMetaData().getTables(catalog, schemaPattern, tableNamePattern, tableTypes);
-
-        List<String> listTables = new ArrayList<>();
-        while (tablesRS.next())
-        {
-            String tableName = tablesRS.getString("TABLE_NAME");
-            String tableType = tablesRS.getString("TABLE_TYPE");
-            String remarks = tablesRS.getString("REMARKS");
-
-            listTables.add(tableName);
-        }
-        return listTables;
     }
 
 }
