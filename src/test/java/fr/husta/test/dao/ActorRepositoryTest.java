@@ -4,16 +4,19 @@ import fr.husta.test.config.DatabaseConfiguration;
 import fr.husta.test.database.TestDatabase;
 import fr.husta.test.domain.Actor;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,6 +36,19 @@ public class ActorRepositoryTest
     public void setUp() throws Exception
     {
         assertThat(actorRepository).isNotNull();
+    }
+
+    @Test
+    @Commit
+    @Ignore
+    public void save_usingSequence() throws Exception
+    {
+        LocalDateTime lastUpdate = LocalDateTime.now();
+        Actor newActor = new Actor("Robert", "REDFORD", lastUpdate);
+
+        newActor = actorRepository.save(newActor);
+
+        assertThat(newActor.getActorId()).isNotNull();
     }
 
     @Test
