@@ -23,7 +23,6 @@
         <hibernate.version>5.2.10.Final</hibernate.version>
 
         <spring-framework.version>4.3.9.RELEASE</spring-framework.version>
-        <!--<spring-data-jpa.version>1.11.3.RELEASE</spring-data-jpa.version>-->
         <spring-data-release-train.version>Ingalls-SR4</spring-data-release-train.version>
         <querydsl.version>4.1.4</querydsl.version>
 
@@ -44,8 +43,7 @@
                 <type>pom</type>
             </dependency>
 
-            <!-- Spring Data JPA -->
-            <!-- BOM -->
+            <!-- SPRING-DATA - BOM-->
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-releasetrain</artifactId>
@@ -53,11 +51,6 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.data</groupId>-->
-                <!--<artifactId>spring-data-jpa</artifactId>-->
-                <!--<version>${spring-data-jpa.version}</version>-->
-            <!--</dependency>-->
 
             <!--
                 QueryDSL, utilisé par Spring Data JPA (optionnel)
