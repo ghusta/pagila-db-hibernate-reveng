@@ -32,8 +32,12 @@ public interface ${entityName}Repository
 <#-- Générer un finder JPA pour cette property -->
 <#-- Doc Spring Data JPA : Defining query methods (https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details) -->
 <#foreach property in pojo.getAllPropertiesIterator()>
-<#if c2j.hasMetaAttribute(property, "gen-finder")>
 <#assign propertyJavaType = pojo.getJavaTypeName(property, jdk5) />
+<#-- Check incompatible meta attributes -->
+<#if c2j.hasMetaAttribute(property, "gen-finder") && c2j.hasMetaAttribute(property, "gen-finder-unique")>
+    <#stop "Meta attributes \"gen-finder\" and \"gen-finder-unique\" are mutually exclusives ! - Property is '${property.name}.'">
+</#if>
+<#if c2j.hasMetaAttribute(property, "gen-finder")>
 
     /**
      * Finder pour : ${property.name}.
@@ -87,20 +91,37 @@ public interface ${entityName}Repository
 
 </#if>
 <#if c2j.hasMetaAttribute(property, "gen-finder-ignore-case")>
-<#assign propertyJavaType = pojo.getJavaTypeName(property, jdk5) />
-
     /**
-    * Finder pour : ${property.name}, insensible à la casse.
-    *
-    * @param ${property.name} critère recherche (égalité).
-    * @return {@link List} de résultats.
-    */
+     * Finder pour : ${property.name}, insensible à la casse.
+     *
+     * @param ${property.name} critère recherche (égalité).
+     * @return {@link List} de résultats.
+     */
     ${pojo.importType("java.util.List")}<${entityName}> findBy${property.name?cap_first}IgnoreCase(${propertyJavaType} ${property.name});
 
 </#if>
 <#if c2j.hasMetaAttribute(property, "gen-finder-java8-stream")>
     @${pojo.importType("org.springframework.data.jpa.repository.Query")}("select o from ${entityName} o where o.${property.name} = :${property.name}")
     ${pojo.importType("java.util.stream.Stream")}<${entityName}> streamBy${property.name?cap_first}(@${pojo.importType("org.springframework.data.repository.query.Param")}("${property.name}") ${propertyJavaType} ${property.name});
+
+</#if>
+<#-- Mutually exclusive with 'gen-finder' -->
+<#if c2j.hasMetaAttribute(property, "gen-finder-unique")>
+    /**
+     * Finder pour : ${property.name}.
+     *
+     * @param ${property.name} critère recherche (égalité).
+     * @return Résultat unique.
+     */
+     ${entityName} findBy${property.name?cap_first}(${propertyJavaType} ${property.name});
+
+    /**
+     * Finder pour : ${property.name}, insensible à la casse.
+     *
+     * @param ${property.name} critère recherche (égalité + ignore case).
+     * @return Résultat unique.
+     */
+     ${entityName} findBy${property.name?cap_first}IgnoreCase(${propertyJavaType} ${property.name});
 
 </#if>
 <#if c2j.hasMetaAttribute(property, "gen-finder-like")>
