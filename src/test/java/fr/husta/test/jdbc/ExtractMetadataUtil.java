@@ -210,7 +210,7 @@ public class ExtractMetadataUtil
             String pkColumnName = fkRS.getString("PKCOLUMN_NAME");
             String fkName = fkRS.getString("FK_NAME");
 
-            listFKs.add(String.format("%-25s %s.%s (FK) => %s.%s (PK)",
+            listFKs.add(String.format("%-32s %s.%s (FK) => %s.%s (PK)",
                     fkName,
                     fkTableName, fkColumnName,
                     pkTableName, pkColumnName));
