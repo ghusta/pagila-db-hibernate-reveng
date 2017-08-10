@@ -13,6 +13,10 @@
         <file>logs/app-test.log</file>
     </appender>
 
+    <root level="warn">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
     <logger name="org.springframework.orm.jpa.JpaTransactionManager">
         <level value="debug"/>
     </logger>
@@ -20,12 +24,21 @@
         <level value="info"/>
     </logger>
 
-    <logger name="org.hibernate.stat" additivity="false" level="debug">
-        <appender-ref ref="FILE"/>
+    <logger name="org.hibernate">
+        <level value="info"/>
     </logger>
 
-    <root level="warn">
-        <appender-ref ref="STDOUT"/>
-    </root>
+    <logger name="org.hibernate.Version" additivity="false">
+        <level value="info"/>
+    </logger>
+
+    <logger name="org.hibernate.cfg" additivity="false">
+        <level value="debug"/>
+    </logger>
+
+    <logger name="org.hibernate.stat" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="FILE"/>
+    </logger>
 
 </configuration>
