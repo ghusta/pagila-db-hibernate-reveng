@@ -252,6 +252,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Logging -->
+        <!-- SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
         <!-- Logback -->
         <dependency>
             <groupId>ch.qos.logback</groupId>

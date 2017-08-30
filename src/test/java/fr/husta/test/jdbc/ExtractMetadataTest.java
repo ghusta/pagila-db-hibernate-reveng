@@ -57,6 +57,11 @@ public class ExtractMetadataTest
         System.out.println(schemaList);
         System.out.println();
 
+        List<String> tableTypesList = ExtractMetadataUtil.getTableTypeList(connection);
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES TYPES D'ENTITES ---"));
+        System.out.println(tableTypesList);
+        System.out.println();
+
         String defaultSchema = "public";
 
         List<String> tableList = ExtractMetadataUtil.getTableList(connection, defaultSchema);

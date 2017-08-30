@@ -49,7 +49,6 @@ public class DatabaseConfiguration
         // entityManagerFactoryBean.setPersistenceUnitPostProcessors(...);
         // OU
         // http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/orm/jpa/LocalContainerEntityManagerFactoryBean.html#setPackagesToScan-java.lang.String...-
-        // entityManagerFactoryBean.setPackagesToScan(...);
         entityManagerFactoryBean.setPackagesToScan("fr.husta.test");
 
         Properties jpaProperties = new Properties();

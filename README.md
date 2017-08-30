@@ -37,6 +37,12 @@ Use something like
 The name of the param must be one of the constants defined here : [SequenceStyleGenerator](https://docs.jboss.org/hibernate/orm/current/javadocs/org/hibernate/id/enhanced/SequenceStyleGenerator.html).   
 The code generation can be explored there : [org.hibernate.tool.hbm2x.pojo.EntityPOJOClass#generateAnnIdGenerator()](https://github.com/hibernate/hibernate-tools/blob/master/main/src/java/org/hibernate/tool/hbm2x/pojo/EntityPOJOClass.java). 
 
+## Logging
+
+Add system property :
+
+    -Dorg.slf4j.simpleLogger.log.org.hibernate.cfg.reveng=debug
+
 ## External references
 
 - [Hibernate Tools](http://hibernate.org/tools/)
