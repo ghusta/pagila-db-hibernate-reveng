@@ -13,14 +13,12 @@ import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExtractMetadataTest
-{
+public class ExtractMetadataTest {
 
     private Properties dbProperties;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         dbProperties = new Properties();
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("db.properties");
         dbProperties.load(is);
@@ -29,8 +27,7 @@ public class ExtractMetadataTest
     }
 
     @Test
-    public void testDatabaseMetadata() throws Exception
-    {
+    public void testDatabaseMetadata() throws Exception {
         System.out.println(AnsiColor.colorizeDefault("--- TEST : EXTRACTION METADATA JDBC ---"));
 
         String jdbcUrl = dbProperties.getProperty("db.url");
@@ -50,6 +47,8 @@ public class ExtractMetadataTest
         System.out.println("getMaxColumnNameLength = " + metaData.getMaxColumnNameLength());
         System.out.println("supportsMixedCaseIdentifiers = " + metaData.supportsMixedCaseIdentifiers());
         System.out.println("supportsMixedCaseQuotedIdentifiers = " + metaData.supportsMixedCaseQuotedIdentifiers());
+        System.out.println("supportsSchemasInDataManipulation = " + metaData.supportsSchemasInDataManipulation());
+        System.out.println("supportsSchemasInTableDefinitions = " + metaData.supportsSchemasInTableDefinitions());
 
         System.out.println();
         List<String> schemaList = ExtractMetadataUtil.getSchemaList(connection);
@@ -148,11 +147,36 @@ public class ExtractMetadataTest
         connection.close();
     }
 
-    private static String listStringToBullet(List<String> source)
-    {
+    @Test
+    public void testTableExists() throws Exception {
+        String jdbcUrl = dbProperties.getProperty("db.url");
+        String jdbcUsername = dbProperties.getProperty("db.username");
+        String jdbcPassword = dbProperties.getProperty("db.password");
+        Connection cnx = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
+
+        DatabaseMetaData metaData = ExtractMetadataUtil.getMetaData(cnx);
+
+        boolean res;
+
+        res = ExtractMetadataUtil.existsTable(cnx, null, "city");
+        assertThat(res).isTrue();
+
+        res = ExtractMetadataUtil.existsTable(cnx, "public", "city");
+        assertThat(res).isTrue();
+
+        res = ExtractMetadataUtil.existsTable(cnx, "unknown_schema", "city");
+        assertThat(res).isFalse();
+
+        res = ExtractMetadataUtil.existsTable(cnx, null, "CITY");
+        assertThat(res).isTrue();
+
+        res = ExtractMetadataUtil.existsTable(cnx, null, "NOT_A_TABLE");
+        assertThat(res).isFalse();
+    }
+
+    private static String listStringToBullet(List<String> source) {
         StringBuilder sb = new StringBuilder();
-        for (String str : source)
-        {
+        for (String str : source) {
             sb.append(" * ").append(str).append("\n");
         }
         return sb.toString();
