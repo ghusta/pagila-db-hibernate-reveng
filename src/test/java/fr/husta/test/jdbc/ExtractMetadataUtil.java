@@ -8,8 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExtractMetadataUtil
-{
+public class ExtractMetadataUtil {
 
     public static final String CHAR_INFINI = "\u221E";
     public static final String CHAR_EMPTY = "\u2205";
@@ -22,8 +21,7 @@ public class ExtractMetadataUtil
     public static final int UNKNOWN_SCALE = Integer.MAX_VALUE;
     public static final Boolean UNKNOWN_NULLABLE = null;
 
-    public static DatabaseMetaData getMetaData(final Connection cnx) throws SQLException
-    {
+    public static DatabaseMetaData getMetaData(final Connection cnx) throws SQLException {
         return cnx.getMetaData();
     }
 
@@ -34,8 +32,7 @@ public class ExtractMetadataUtil
      * @return
      * @throws SQLException
      */
-    public static String getDatabaseProductVersion(final DatabaseMetaData databaseMetaData) throws SQLException
-    {
+    public static String getDatabaseProductVersion(final DatabaseMetaData databaseMetaData) throws SQLException {
         return String.format("%d.%d", databaseMetaData.getDatabaseMajorVersion(), databaseMetaData.getDatabaseMinorVersion());
     }
 
@@ -46,33 +43,27 @@ public class ExtractMetadataUtil
      * @return
      * @throws SQLException
      */
-    public static String getDatabaseProductFullVersion(final DatabaseMetaData databaseMetaData) throws SQLException
-    {
+    public static String getDatabaseProductFullVersion(final DatabaseMetaData databaseMetaData) throws SQLException {
         return String.format("%s", databaseMetaData.getDatabaseProductVersion());
     }
 
-    public static String getDatabaseProductName(final DatabaseMetaData databaseMetaData) throws SQLException
-    {
+    public static String getDatabaseProductName(final DatabaseMetaData databaseMetaData) throws SQLException {
         return String.format("%s", databaseMetaData.getDatabaseProductName());
     }
 
-    public static org.hibernate.cfg.Configuration getHibernateConfiguration()
-    {
+    public static org.hibernate.cfg.Configuration getHibernateConfiguration() {
         return new org.hibernate.cfg.Configuration();
     }
 
-    public static javax.persistence.metamodel.Metamodel getJpa2Metamodel()
-    {
+    public static javax.persistence.metamodel.Metamodel getJpa2Metamodel() {
         throw new UnsupportedOperationException();
     }
 
-    public static List<String> getSchemaList(final Connection cnx) throws SQLException
-    {
+    public static List<String> getSchemaList(final Connection cnx) throws SQLException {
         ResultSet schemasRS = cnx.getMetaData().getSchemas();
 
         List<String> listSchemas = new ArrayList<>();
-        while (schemasRS.next())
-        {
+        while (schemasRS.next()) {
             String tableSchem = schemasRS.getString("TABLE_SCHEM");
             String tableCatalog = schemasRS.getString("TABLE_CATALOG");
 
@@ -81,8 +72,7 @@ public class ExtractMetadataUtil
         return listSchemas;
     }
 
-    public static List<String> getTableList(final Connection cnx, final String schemaPattern) throws SQLException
-    {
+    public static List<String> getTableList(final Connection cnx, final String schemaPattern) throws SQLException {
         String catalog = "";
         String tableNamePattern = "%";
         String[] tableTypes = new String[]{"TABLE"};
@@ -90,8 +80,7 @@ public class ExtractMetadataUtil
         ResultSet tablesRS = metaData.getTables(catalog, schemaPattern, tableNamePattern, tableTypes);
 
         List<String> listTables = new ArrayList<>();
-        while (tablesRS.next())
-        {
+        while (tablesRS.next()) {
             String tableName = tablesRS.getString("TABLE_NAME");
             String tableType = tablesRS.getString("TABLE_TYPE");
             String remarks = tablesRS.getString("REMARKS");
@@ -101,16 +90,30 @@ public class ExtractMetadataUtil
         return listTables;
     }
 
-    public static List<String> getSequenceList(final Connection cnx, final String schemaPattern) throws SQLException
-    {
+    public static boolean existsTable(final Connection cnx, final String schemaPattern, final String tableName) throws SQLException {
+        String[] tableTypes = new String[]{"TABLE"};
+        DatabaseMetaData metaData = cnx.getMetaData();
+        String localTableName = tableName.trim();
+        if (!metaData.supportsMixedCaseIdentifiers()) {
+            localTableName = localTableName.toLowerCase();
+        }
+
+        ResultSet tablesRS = metaData.getTables(null, schemaPattern, localTableName, tableTypes);
+        if (tablesRS.next()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static List<String> getSequenceList(final Connection cnx, final String schemaPattern) throws SQLException {
         String catalog = "";
         String tableNamePattern = "%";
         String[] tableTypes = new String[]{"SEQUENCE"};
         ResultSet tablesRS = cnx.getMetaData().getTables(catalog, schemaPattern, tableNamePattern, tableTypes);
 
         List<String> listTables = new ArrayList<>();
-        while (tablesRS.next())
-        {
+        while (tablesRS.next()) {
             String tableName = tablesRS.getString("TABLE_NAME");
             String tableType = tablesRS.getString("TABLE_TYPE");
             String remarks = tablesRS.getString("REMARKS");
@@ -122,16 +125,14 @@ public class ExtractMetadataUtil
 
 
     public static List<String> getTableColumnList(final Connection cnx, final String schemaPattern, final String tableNamePattern)
-            throws SQLException
-    {
+            throws SQLException {
         String catalog = "";
         String columnNamePattern = "%";
         DatabaseMetaData metaData = cnx.getMetaData();
         ResultSet tablesRS = metaData.getColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);
 
         List<String> listCols = new ArrayList<>();
-        while (tablesRS.next())
-        {
+        while (tablesRS.next()) {
             String columnName = tablesRS.getString("COLUMN_NAME");
             // cf. java.sql.JDBCType
             int javaSqlType = tablesRS.getInt("DATA_TYPE"); // SQL type from java.sql.Types
@@ -156,12 +157,9 @@ public class ExtractMetadataUtil
             // SQL type from java.sql.Types (null if DATA_TYPE isn't DISTINCT or user-generated REF)
             Short sourceDataRef = tablesRS.getShort("SOURCE_DATA_TYPE");
             JDBCType sourceDataRefJdbcType;
-            if (tablesRS.wasNull())
-            {
+            if (tablesRS.wasNull()) {
                 sourceDataRefJdbcType = null;
-            }
-            else
-            {
+            } else {
                 sourceDataRefJdbcType = JDBCType.valueOf(sourceDataRef);
             }
 
@@ -175,15 +173,13 @@ public class ExtractMetadataUtil
     }
 
     public static List<String> getTablePrimaryKeysList(final Connection cnx, final String schema, final String table)
-            throws SQLException
-    {
+            throws SQLException {
         String catalog = "";
         DatabaseMetaData metaData = cnx.getMetaData();
         ResultSet pkRS = metaData.getPrimaryKeys(catalog, schema, table);
 
         List<String> listPKs = new ArrayList<>();
-        while (pkRS.next())
-        {
+        while (pkRS.next()) {
             String columnName = pkRS.getString("COLUMN_NAME");
             short keySeq = pkRS.getShort("KEY_SEQ");
             String pkName = pkRS.getString("PK_NAME");
@@ -195,15 +191,13 @@ public class ExtractMetadataUtil
     }
 
     public static List<String> getTableImportedForeignKeysList(final Connection cnx, final String schema, final String table)
-            throws SQLException
-    {
+            throws SQLException {
         String catalog = "";
         DatabaseMetaData metaData = cnx.getMetaData();
         ResultSet fkRS = metaData.getImportedKeys(catalog, schema, table);
 
         List<String> listFKs = new ArrayList<>();
-        while (fkRS.next())
-        {
+        while (fkRS.next()) {
             String fkTableName = fkRS.getString("FKTABLE_NAME");
             String fkColumnName = fkRS.getString("FKCOLUMN_NAME");
             String pkTableName = fkRS.getString("PKTABLE_NAME");
@@ -219,15 +213,13 @@ public class ExtractMetadataUtil
     }
 
     public static List<String> getTableExportedForeignKeysList(final Connection cnx, final String schema, final String table)
-            throws SQLException
-    {
+            throws SQLException {
         String catalog = "";
         DatabaseMetaData metaData = cnx.getMetaData();
         ResultSet fkRS = metaData.getExportedKeys(catalog, schema, table);
 
         List<String> listFKs = new ArrayList<>();
-        while (fkRS.next())
-        {
+        while (fkRS.next()) {
             String fkTableName = fkRS.getString("FKTABLE_NAME");
             String fkColumnName = fkRS.getString("FKCOLUMN_NAME");
             String pkTableName = fkRS.getString("PKTABLE_NAME");
@@ -243,18 +235,17 @@ public class ExtractMetadataUtil
 
     /**
      * Table type list.
+     *
      * @param cnx
      * @return List containing TABLE, SEQUENCE, INDEX, VIEW, etc.
      * @throws SQLException
      */
-    public static List<String> getTableTypeList(final Connection cnx) throws SQLException
-    {
+    public static List<String> getTableTypeList(final Connection cnx) throws SQLException {
         DatabaseMetaData metaData = cnx.getMetaData();
         ResultSet typesRS = metaData.getTableTypes();
 
         List<String> listTableTypes = new ArrayList<>();
-        while (typesRS.next())
-        {
+        while (typesRS.next()) {
             String tableType = typesRS.getString("TABLE_TYPE");
             listTableTypes.add(tableType);
         }
@@ -262,16 +253,14 @@ public class ExtractMetadataUtil
     }
 
     public static List<String> getUserDefinedTypeList(final Connection cnx, final String schemaPattern)
-            throws SQLException
-    {
+            throws SQLException {
         String catalog = "";
         String typeNamePattern = "%";
         DatabaseMetaData metaData = cnx.getMetaData();
         ResultSet typeNameRS = metaData.getSuperTypes(catalog, schemaPattern, typeNamePattern);
 
         List<String> listTypes = new ArrayList<>();
-        while (typeNameRS.next())
-        {
+        while (typeNameRS.next()) {
             String typeCat = typeNameRS.getString("TYPE_CAT");
             String typeSchem = typeNameRS.getString("TYPE_SCHEM");
             String typeName = typeNameRS.getString("TYPE_NAME");
@@ -292,30 +281,21 @@ public class ExtractMetadataUtil
      * @return Column size, or (precision, scale) for numeric types.
      * @throws SQLException
      */
-    private static String colSizeToString(int size, int decimalDigits) throws SQLException
-    {
-        if (size == UNKNOWN_LENGTH)
-        {
+    private static String colSizeToString(int size, int decimalDigits) throws SQLException {
+        if (size == UNKNOWN_LENGTH) {
             return CHAR_INFINI;
-        }
-        else
-        {
-            if (decimalDigits == 0)
-            {
+        } else {
+            if (decimalDigits == 0) {
                 return String.valueOf(size);
-            }
-            else
-            {
+            } else {
                 return String.format("%d, %d", size, decimalDigits);
             }
         }
     }
 
-    private static String nullableToString(int nullable)
-    {
+    private static String nullableToString(int nullable) {
         String res = null;
-        switch (nullable)
-        {
+        switch (nullable) {
             case DatabaseMetaData.attributeNoNulls:
                 res = "NOT NULLABLE";
                 break;
@@ -329,11 +309,9 @@ public class ExtractMetadataUtil
         return res;
     }
 
-    private static String nullableToBoolString(int nullable)
-    {
+    private static String nullableToBoolString(int nullable) {
         String res = null;
-        switch (nullable)
-        {
+        switch (nullable) {
             case DatabaseMetaData.attributeNoNulls:
                 res = "NO";
                 break;
