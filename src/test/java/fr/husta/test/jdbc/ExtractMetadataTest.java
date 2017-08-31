@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class ExtractMetadataTest {
 
@@ -160,6 +161,13 @@ public class ExtractMetadataTest {
 
         res = ExtractMetadataUtil.existsTable(cnx, null, "city");
         assertThat(res).isTrue();
+
+        try {
+            res = ExtractMetadataUtil.existsTable(cnx, null, "city%");
+            fail("Should throw exception");
+        } catch (Exception e) {
+            // ok
+        }
 
         res = ExtractMetadataUtil.existsTable(cnx, "public", "city");
         assertThat(res).isTrue();

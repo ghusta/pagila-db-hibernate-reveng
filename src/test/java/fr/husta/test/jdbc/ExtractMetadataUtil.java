@@ -91,9 +91,19 @@ public class ExtractMetadataUtil {
     }
 
     public static boolean existsTable(final Connection cnx, final String schemaPattern, final String tableName) throws SQLException {
+        if (tableName == null) {
+            throw new IllegalArgumentException("tableName must not be null");
+        }
+        if (tableName.contains("%")) {
+            throw new IllegalArgumentException("tableName must not use pattern characters (%)");
+        }
+
+        String localTableName = tableName.trim();
+        // escape SQL char _ to \_ (like)
+        localTableName = localTableName.replace("_", "\\_");
+
         String[] tableTypes = new String[]{"TABLE"};
         DatabaseMetaData metaData = cnx.getMetaData();
-        String localTableName = tableName.trim();
         if (!metaData.supportsMixedCaseIdentifiers()) {
             localTableName = localTableName.toLowerCase();
         }
