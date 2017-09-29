@@ -16,7 +16,7 @@
         <sql-type jdbc-type="DATE" hibernate-type="java.time.LocalDate"/>
         <sql-type jdbc-type="TIMESTAMP" hibernate-type="java.time.LocalDateTime"/>
         <!-- ne marche pas avec Postgres driver 42.0 -->
-        <sql-type jdbc-type="TIMESTAMP_WITH_TIMEZONE" hibernate-type="java.time.ZonedDateTime"/>
+        <sql-type jdbc-type="TIMESTAMP_WITH_TIMEZONE" hibernate-type="java.time.OffsetDateTime"/>
 
         <!--
         org.hibernate.tool.hbm2x.pojo.BasicPOJOClass.buildColumnAnnotation
