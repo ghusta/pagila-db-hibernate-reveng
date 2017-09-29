@@ -22,8 +22,9 @@
 
         <hibernate.version>5.2.11.Final</hibernate.version>
 
-        <spring-framework.version>4.3.11.RELEASE</spring-framework.version>
+        <spring-framework.version>5.0.0.RELEASE</spring-framework.version>
         <spring-data-release-train.version>Ingalls-SR7</spring-data-release-train.version>
+        <!--<spring-data-release-train.version>Kay-RC3</spring-data-release-train.version>-->
         <querydsl.version>4.1.4</querydsl.version>
 
         <slf4j.version>1.7.25</slf4j.version>
@@ -461,5 +462,16 @@
         </profile>
 
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>spring-libs-milestone</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>
