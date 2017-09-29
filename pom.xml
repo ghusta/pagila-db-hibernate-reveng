@@ -444,8 +444,8 @@
                             <dependency>
                                 <groupId>org.hibernate</groupId>
                                 <artifactId>hibernate-tools</artifactId>
-                                <!--<version>5.2.3.Final</version>-->
-                                <version>5.2.4-SNAPSHOT</version>
+                                <version>5.2.6.Final</version>
+                                <!--<version>5.2.4-SNAPSHOT</version>-->
                             </dependency>
 
                             <dependency>
