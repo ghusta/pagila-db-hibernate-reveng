@@ -6,11 +6,14 @@ import fr.husta.test.domain.Film;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,10 +22,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class})
 @ActiveProfiles("TEST")
-@TestDatabase // includes @Transactional
+//@TestDatabase // includes @Transactional
+@Transactional
 @Rollback
 public class FilmRepositoryTest
 {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private FilmRepository filmRepository;
@@ -41,7 +47,7 @@ public class FilmRepositoryTest
 
         List<Film> films = filmRepository.findByReleaseYearBetween(start, end);
         assertThat(films).isNotNull();
-        System.out.println(films.size());
+        logger.debug("Nb films = {}", films.size());
     }
 
 }
