@@ -23,7 +23,7 @@
         <hibernate.version>5.2.10.Final</hibernate.version>
 
         <spring-framework.version>4.3.9.RELEASE</spring-framework.version>
-        <spring-data-release-train.version>Ingalls-SR4</spring-data-release-train.version>
+        <spring-data-release-train.version>Ingalls-SR7</spring-data-release-train.version>
         <querydsl.version>4.1.4</querydsl.version>
 
         <slf4j.version>1.7.25</slf4j.version>
