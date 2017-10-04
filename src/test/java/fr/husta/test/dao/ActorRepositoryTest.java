@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,6 +56,26 @@ public class ActorRepositoryTest
         assertThat(newActor.getActorId()).isNotNull();
     }
 
+    @Test
+    public void findById() throws Exception
+    {
+        Optional<Actor> actor = actorRepository.findById(1);
+        assertThat(actor).isPresent();
+    }
+
+    @Test
+    public void getOneById() throws Exception
+    {
+        Actor actor = actorRepository.getOne(1);
+        assertThat(actor).isNotNull();
+    }
+
+    @Test
+    public void existsById() throws Exception
+    {
+        boolean exists = actorRepository.existsById(1);
+        assertThat(exists).isTrue();
+    }
     @Test
     public void findByFirstName() throws Exception
     {
