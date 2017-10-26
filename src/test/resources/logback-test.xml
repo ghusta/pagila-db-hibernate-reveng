@@ -17,6 +17,10 @@
         <appender-ref ref="STDOUT"/>
     </root>
 
+    <logger name="fr.husta.test.dao">
+        <level value="debug"/>
+    </logger>
+
     <logger name="org.springframework.orm.jpa.JpaTransactionManager">
         <!--<level value="debug"/>-->
         <level value="info"/>
