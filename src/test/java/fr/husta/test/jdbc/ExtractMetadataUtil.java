@@ -11,6 +11,7 @@ import java.util.List;
 public class ExtractMetadataUtil {
 
     public static final String CHAR_INFINI = "\u221E";
+    public static final String CHAR_UNKNOWN = "?";
     public static final String CHAR_EMPTY = "\u2205";
     public static final String CHAR_TIRET_LONG = "\u2014";
     public static final String CHAR_TIRET_MOYEN = "\u2013";
@@ -173,8 +174,9 @@ public class ExtractMetadataUtil {
                 sourceDataRefJdbcType = JDBCType.valueOf(sourceDataRef);
             }
 
-            String sqlTypeSize = String.format("%s(%s)", typeName, colSizeToString(columnSize, decimalDigits));
-            listCols.add(String.format("%-25s [ %-20s - JDBC TYPE: %-10s - NULLABLE: %5s - DEFAULT: %5s - AUTOINC: %3s%s] %s", columnName, sqlTypeSize,
+            String colSizeToString = colSizeToString(columnSize, decimalDigits);
+            String sqlTypeAndSize = (colSizeToString == null ? String.format("%s", typeName) : String.format("%s(%s)", typeName, colSizeToString));
+            listCols.add(String.format("%-25s [ %-20s - JDBC TYPE: %-10s - NULLABLE: %5s - DEFAULT: %5s - AUTOINC: %3s%s] %s", columnName, sqlTypeAndSize,
                     jdbcType, strIsNullable, (defaultValue == null ? "" : defaultValue), strIsAutoInc,
                     (sourceDataRefJdbcType == null ? "" : " - DATA REF TYPE: " + sourceDataRefJdbcType),
                     (remarks == null ? "" : " -- Comment : " + remarks)));
@@ -293,7 +295,7 @@ public class ExtractMetadataUtil {
      */
     private static String colSizeToString(int size, int decimalDigits) throws SQLException {
         if (size == UNKNOWN_LENGTH) {
-            return CHAR_INFINI;
+            return null;
         } else {
             if (decimalDigits == 0) {
                 return String.valueOf(size);
