@@ -3,6 +3,8 @@ package fr.husta.test.dao;
 import fr.husta.test.config.DatabaseConfiguration;
 import fr.husta.test.domain.Actor;
 import fr.husta.test.domain.Actor_;
+import fr.husta.test.dto.ActorNamesDto;
+import fr.husta.test.dto.ActorNamesDtoImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +20,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -92,6 +96,17 @@ public class CustomActorRepositoryTest {
         for (Actor actor : actors) {
             logger.debug("{} {} {}", actor.getActorId(), actor.getFirstName(), actor.getLastName());
         }
+    }
+
+    @Test
+    public void projectionIntoDto() throws Exception {
+        Collection<ActorNamesDto> actorNamesDtoList = customActorRepository.findActorNamesUsingDto();
+        assertThat(actorNamesDtoList).isNotEmpty();
+
+//        for (ActorNamesDto actorNamesDto : actorNamesDtoList) {
+//            System.out.println(actorNamesDto);
+//        }
+
     }
 
 }
