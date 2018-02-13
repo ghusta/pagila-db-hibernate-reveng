@@ -83,6 +83,21 @@ public class ExtractMetadataTest {
         System.out.println(AnsiColor.colorize("FILM => ", AnsiColor.FG_GREEN));
         System.out.println(listStringToBullet(colsList));
 
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES PK / TABLE ---"));
+        colsList = ExtractMetadataUtil.getTablePrimaryKeysList(connection, currentSchema, "actor");
+        System.out.println(AnsiColor.colorize("PK ACTOR => ", AnsiColor.FG_MAGENTA));
+        System.out.println(listStringToBullet(colsList));
+
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES PK / TABLE ---"));
+        colsList = ExtractMetadataUtil.getTablePrimaryKeysList(connection, currentSchema, "film");
+        System.out.println(AnsiColor.colorize("PK FILM => ", AnsiColor.FG_MAGENTA));
+        System.out.println(listStringToBullet(colsList));
+
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES FK / TABLE ---"));
+        colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, currentSchema, "actor");
+        System.out.println(AnsiColor.colorize("FK ACTOR => ", AnsiColor.FG_YELLOW));
+        System.out.println(listStringToBullet(colsList));
+
         System.out.println(AnsiColor.colorizeDefault("--- LISTE DES FK / TABLE ---"));
         colsList = ExtractMetadataUtil.getTableImportedForeignKeysList(connection, currentSchema, "film");
         System.out.println(AnsiColor.colorize("FK FILM => ", AnsiColor.FG_YELLOW));
