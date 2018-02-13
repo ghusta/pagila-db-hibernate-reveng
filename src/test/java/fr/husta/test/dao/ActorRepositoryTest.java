@@ -59,7 +59,7 @@ public class ActorRepositoryTest
     public void findByFirstName() throws Exception
     {
         String term = "ADAM";
-        Page<Actor> actors = actorRepository.findByFirstName(term, new PageRequest(0, 50));
+        Page<Actor> actors = actorRepository.findByFirstName(term, PageRequest.of(0, 50));
         assertThat(actors).isNotEmpty();
         assertThat(actors.getTotalElements()).isGreaterThanOrEqualTo(2);
     }

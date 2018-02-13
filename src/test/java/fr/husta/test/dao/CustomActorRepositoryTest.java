@@ -46,7 +46,7 @@ public class CustomActorRepositoryTest {
     public void customFindByFirstNameStartWithByPage_page1() throws Exception {
         int pageNumber = 1;
         Page<Actor> actors = customActorRepository.customFindByFirstNameStartWithByPage("A",
-                new PageRequest(pageNumber - 1, 3, new Sort(Sort.Direction.ASC, Actor_.firstName.getName())));
+                PageRequest.of(pageNumber - 1, 3, new Sort(Sort.Direction.ASC, Actor_.firstName.getName())));
         assertThat(actors).isNotEmpty();
         assertThat(actors).hasSize(3);
 
@@ -60,7 +60,7 @@ public class CustomActorRepositoryTest {
     public void customFindByFirstNameStartWithByPage_page2() throws Exception {
         int pageNumber = 2;
         Page<Actor> actors = customActorRepository.customFindByFirstNameStartWithByPage("A",
-                new PageRequest(pageNumber - 1, 3, new Sort(Sort.Direction.ASC, Actor_.firstName.getName())));
+                PageRequest.of(pageNumber - 1, 3, new Sort(Sort.Direction.ASC, Actor_.firstName.getName())));
         assertThat(actors).isNotEmpty();
         assertThat(actors).hasSize(3);
 
@@ -74,7 +74,7 @@ public class CustomActorRepositoryTest {
     public void customFindByFirstNameStartWithByPage_page3_JpaSort() throws Exception {
         int pageNumber = 3;
         Page<Actor> actors = customActorRepository.customFindByFirstNameStartWithByPage("A",
-                new PageRequest(pageNumber - 1, 3, new JpaSort(Actor_.firstName)));
+                PageRequest.of(pageNumber - 1, 3, new JpaSort(Actor_.firstName)));
         assertThat(actors).isNotEmpty();
         assertThat(actors).hasSize(3);
 
@@ -88,7 +88,7 @@ public class CustomActorRepositoryTest {
     public void customFindByFirstNameStartWithByPage_lastPage_JpaSort() throws Exception {
         int pageNumber = 1;
         Page<Actor> actors = customActorRepository.customFindByFirstNameStartWithByPage("Z",
-                new PageRequest(pageNumber - 1, 3, new JpaSort(Actor_.firstName)));
+                PageRequest.of(pageNumber - 1, 3, new JpaSort(Actor_.firstName)));
         assertThat(actors).isNotEmpty();
         assertThat(actors).hasSize(1);
 

@@ -2,6 +2,7 @@ package fr.husta.test.dao;
 
 import fr.husta.test.domain.Actor;
 import fr.husta.test.dto.ActorNamesDto;
+import fr.husta.test.dto.ActorNamesDtoImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

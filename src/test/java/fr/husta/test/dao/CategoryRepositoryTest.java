@@ -37,7 +37,7 @@ public class CategoryRepositoryTest
     public void findByName() throws Exception
     {
         String name = "Animation";
-        Page<Category> categoryPage1 = categoryRepository.findByName(name, new PageRequest(0, 100));
+        Page<Category> categoryPage1 = categoryRepository.findByName(name, PageRequest.of(0, 100));
 
         assertThat(categoryPage1).isNotNull();
         assertThat(categoryPage1.getNumberOfElements()).isEqualTo(1);
