@@ -46,6 +46,8 @@ public class ExtractMetadataTest {
         System.out.println("getMaxSchemaNameLength = " + metaData.getMaxSchemaNameLength());
         System.out.println("getMaxTableNameLength = " + metaData.getMaxTableNameLength());
         System.out.println("getMaxColumnNameLength = " + metaData.getMaxColumnNameLength());
+        System.out.println("getMaxIndexLength = " + metaData.getMaxIndexLength());
+        System.out.println("getMaxColumnsInIndex = " + metaData.getMaxColumnsInIndex());
         System.out.println("supportsMixedCaseIdentifiers = " + metaData.supportsMixedCaseIdentifiers());
         System.out.println("supportsMixedCaseQuotedIdentifiers = " + metaData.supportsMixedCaseQuotedIdentifiers());
         System.out.println("supportsSchemasInDataManipulation = " + metaData.supportsSchemasInDataManipulation());
