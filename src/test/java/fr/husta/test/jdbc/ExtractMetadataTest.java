@@ -37,10 +37,11 @@ public class ExtractMetadataTest {
         Connection connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
 
         DatabaseMetaData metaData = ExtractMetadataUtil.getMetaData(connection);
-        System.out.println("DBMS nom     = " + ExtractMetadataUtil.getDatabaseProductName(metaData));
-        System.out.println("DBMS version = " + ExtractMetadataUtil.getDatabaseProductVersion(metaData));
-        System.out.println("DBMS full version = " + ExtractMetadataUtil.getDatabaseProductFullVersion(metaData));
-        System.out.println("DBMS driver  = " + metaData.getDriverName());
+        System.out.println("DBMS nom             = " + ExtractMetadataUtil.getDatabaseProductName(metaData));
+        System.out.println("DBMS version         = " + ExtractMetadataUtil.getDatabaseProductVersion(metaData));
+        System.out.println("DBMS full version    = " + ExtractMetadataUtil.getDatabaseProductFullVersion(metaData));
+        System.out.println("DBMS driver name     = " + metaData.getDriverName());
+        System.out.println("DBMS driver version  = " + metaData.getDriverVersion());
 
         System.out.println("getMaxConnections = " + metaData.getMaxConnections());
         System.out.println("getMaxSchemaNameLength = " + metaData.getMaxSchemaNameLength());
