@@ -50,6 +50,17 @@ public class ExtractMetadataTest {
         System.out.println("supportsMixedCaseQuotedIdentifiers = " + metaData.supportsMixedCaseQuotedIdentifiers());
         System.out.println("supportsSchemasInDataManipulation = " + metaData.supportsSchemasInDataManipulation());
         System.out.println("supportsSchemasInTableDefinitions = " + metaData.supportsSchemasInTableDefinitions());
+        System.out.println("supportsANSI92IntermediateSQL = " + metaData.supportsANSI92IntermediateSQL());
+        System.out.println("supportsANSI92FullSQL = " + metaData.supportsANSI92FullSQL());
+        System.out.println("supportsTransactions = " + metaData.supportsTransactions());
+        System.out.println("supportsMultipleTransactions = " + metaData.supportsMultipleTransactions());
+        System.out.println("supportsOpenCursorsAcrossCommit = " + metaData.supportsOpenCursorsAcrossCommit());
+        System.out.println("supportsOpenStatementsAcrossCommit = " + metaData.supportsOpenStatementsAcrossCommit());
+        System.out.println("supportsSelectForUpdate = " + metaData.supportsSelectForUpdate());
+        System.out.println("supportsUnion = " + metaData.supportsUnion());
+        System.out.println("supportsStoredProcedures = " + metaData.supportsStoredProcedures());
+        System.out.println("supportsNamedParameters = " + metaData.supportsNamedParameters());
+        System.out.println("supportsOrderByUnrelated = " + metaData.supportsOrderByUnrelated());
 
         System.out.println();
         List<String> schemaList = ExtractMetadataUtil.getSchemaList(connection);

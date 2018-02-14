@@ -196,7 +196,7 @@ public class ExtractMetadataUtil {
             short keySeq = pkRS.getShort("KEY_SEQ");
             String pkName = pkRS.getString("PK_NAME");
 
-            listPKs.add(String.format("%s %s",
+            listPKs.add(String.format("%-25s %s",
                     columnName, (pkName == null ? "" : "PK: " + pkName)));
         }
         return listPKs;
