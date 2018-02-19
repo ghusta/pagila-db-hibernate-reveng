@@ -21,6 +21,10 @@
         <level value="debug"/>
     </logger>
 
+    <logger name="fr.husta.test.postgres.export">
+        <level value="debug"/>
+    </logger>
+
     <logger name="org.springframework.orm.jpa.JpaTransactionManager">
         <!--<level value="debug"/>-->
         <level value="info"/>
