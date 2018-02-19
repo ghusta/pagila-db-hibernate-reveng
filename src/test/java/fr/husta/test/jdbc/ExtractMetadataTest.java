@@ -49,8 +49,15 @@ public class ExtractMetadataTest {
         System.out.println("getMaxColumnNameLength = " + metaData.getMaxColumnNameLength());
         System.out.println("getMaxIndexLength = " + metaData.getMaxIndexLength());
         System.out.println("getMaxColumnsInIndex = " + metaData.getMaxColumnsInIndex());
+        System.out.println("supportsCatalogsInDataManipulation = " + metaData.supportsCatalogsInDataManipulation());
+        System.out.println("supportsCatalogsInTableDefinitions = " + metaData.supportsCatalogsInTableDefinitions());
+
         System.out.println("supportsMixedCaseIdentifiers = " + metaData.supportsMixedCaseIdentifiers());
         System.out.println("supportsMixedCaseQuotedIdentifiers = " + metaData.supportsMixedCaseQuotedIdentifiers());
+        System.out.println("storesLowerCaseIdentifiers = " + metaData.storesLowerCaseIdentifiers());
+        System.out.println("storesUpperCaseIdentifiers = " + metaData.storesUpperCaseIdentifiers());
+        System.out.println("storesMixedCaseIdentifiers = " + metaData.storesMixedCaseIdentifiers());
+
         System.out.println("supportsSchemasInDataManipulation = " + metaData.supportsSchemasInDataManipulation());
         System.out.println("supportsSchemasInTableDefinitions = " + metaData.supportsSchemasInTableDefinitions());
         System.out.println("supportsANSI92IntermediateSQL = " + metaData.supportsANSI92IntermediateSQL());
