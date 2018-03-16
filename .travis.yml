@@ -1,1 +1,17 @@
+sudo: required
+
+services:
+  - docker
+
 language: java
+
+before_install:
+  - docker --version
+  - docker run -d --name pagila-db -e POSTGRES_USER="root" -e POSTGRES_PASSWORD="admin" -p 5510:5432 mujz/pagila
+  - docker ps
+
+install:
+  - mvn dependency:go-offline -B -V
+
+script:
+  - mvn test -Pgen-hibernate-tools
