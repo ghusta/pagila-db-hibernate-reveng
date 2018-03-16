@@ -7,7 +7,7 @@ language: java
 
 before_install:
   - docker --version
-  - docker run -d --name pagila-db -e POSTGRES_USER="root" -e POSTGRES_PASSWORD="admin" -p 5510:5432 mujz/pagila
+  - docker run -d --name pagila-db -e POSTGRES_USER="root" -e POSTGRES_PASSWORD="admin" -p 5799:5432 mujz/pagila
   - docker ps
 
 install:
