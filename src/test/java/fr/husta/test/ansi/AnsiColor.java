@@ -38,16 +38,19 @@ public abstract class AnsiColor
     public static final int FG_BRIGHT_CYAN = 96;
     public static final int FG_BRIGHT_WHITE = 97;
 
-    // private static final int BG_BLACK = 40;
-    // private static final int BG_RED = 41;
-    // private static final int BG_GREEN = 42;
-    // private static final int BG_YELLOW = 44;
-    // private static final int BG_BLUE = 44;
-    // private static final int BG_MAGENTA = 45;
-    // private static final int BG_CYAN = 46;
-    // private static final int BG_WHITE = 47;
+    public static final int BG_BLACK = 40;
+    public static final int BG_RED = 41;
+    public static final int BG_GREEN = 42;
+    public static final int BG_YELLOW = 44;
+    public static final int BG_BLUE = 44;
+    public static final int BG_MAGENTA = 45;
+    public static final int BG_CYAN = 46;
+    public static final int BG_WHITE = 47;
 
-    private static final String PREFIX = "\u001B["; // CHAR : Escape (27)
+    public static final int BG_BRIGHT_YELLOW = 103;
+
+    private static final char ESCAPE_CHAR = '\u001B'; // CHAR : Escape (27)
+    private static final String PREFIX = ESCAPE_CHAR + "[";
     private static final String SUFFIX = "m";
     private static final char SEPARATOR = ';';
     private static final String END_COLOR = PREFIX + SUFFIX;
@@ -71,6 +74,13 @@ public abstract class AnsiColor
     public static String colorize(String message, int foregroundColor)
     {
         return PREFIX + ATTR_DIM + SEPARATOR + foregroundColor + SUFFIX + message + END_COLOR;
+    }
+
+    public static String colorize(String message, int foregroundColor, int backgroundColor)
+    {
+        return PREFIX + ATTR_DIM + SEPARATOR + foregroundColor + SUFFIX
+                + PREFIX + ATTR_DIM + SEPARATOR + backgroundColor + SUFFIX
+                + message + END_COLOR;
     }
 
     public static String bold(String message)
