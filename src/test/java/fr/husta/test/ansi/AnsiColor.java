@@ -29,6 +29,15 @@ public abstract class AnsiColor
     public static final int FG_CYAN = 36;
     public static final int FG_WHITE = 37;
 
+    public static final int FG_BRIGHT_BLACK = 90;
+    public static final int FG_BRIGHT_RED = 91;
+    public static final int FG_BRIGHT_GREEN = 92;
+    public static final int FG_BRIGHT_YELLOW = 93;
+    public static final int FG_BRIGHT_BLUE = 94;
+    public static final int FG_BRIGHT_MAGENTA = 95;
+    public static final int FG_BRIGHT_CYAN = 96;
+    public static final int FG_BRIGHT_WHITE = 97;
+
     // private static final int BG_BLACK = 40;
     // private static final int BG_RED = 41;
     // private static final int BG_GREEN = 42;
