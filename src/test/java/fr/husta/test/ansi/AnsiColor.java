@@ -57,7 +57,7 @@ public abstract class AnsiColor
     private static String warnColor
             = PREFIX + ATTR_DIM + SEPARATOR + FG_MAGENTA + SUFFIX;
     private static String infoColor
-            = PREFIX + ATTR_DIM + SEPARATOR + FG_CYAN + SUFFIX;
+            = PREFIX + ATTR_DIM + SEPARATOR + FG_BLUE + SUFFIX;
     private static String verboseColor
             = PREFIX + ATTR_DIM + SEPARATOR + FG_GREEN + SUFFIX;
     private static String debugColor
