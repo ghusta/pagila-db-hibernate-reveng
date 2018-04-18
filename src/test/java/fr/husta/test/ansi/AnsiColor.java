@@ -5,6 +5,9 @@ package fr.husta.test.ansi;
  * <p>
  * Table ANSI ESCAPE SEQ : http://ascii-table.com/ansi-escape-sequences.php
  * </p>
+ * <p>
+ * ANSI escape colors : https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+ * </p>
  */
 public abstract class AnsiColor
 {
