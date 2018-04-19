@@ -91,6 +91,42 @@ public class ExtractMetadataUtil {
         return listTables;
     }
 
+    public static List<String> getViewList(final Connection cnx, final String schemaPattern) throws SQLException {
+        String catalog = "";
+        String tableNamePattern = "%";
+        String[] tableTypes = new String[]{"VIEW"};
+        DatabaseMetaData metaData = cnx.getMetaData();
+        ResultSet tablesRS = metaData.getTables(catalog, schemaPattern, tableNamePattern, tableTypes);
+
+        List<String> listViews = new ArrayList<>();
+        while (tablesRS.next()) {
+            String tableName = tablesRS.getString("TABLE_NAME");
+            String tableType = tablesRS.getString("TABLE_TYPE");
+            String remarks = tablesRS.getString("REMARKS");
+
+            listViews.add(String.format("%s %s", tableName, (remarks == null ? "" : "(" + remarks + ")")));
+        }
+        return listViews;
+    }
+
+    public static List<String> getMaterializedViewList(final Connection cnx, final String schemaPattern) throws SQLException {
+        String catalog = "";
+        String tableNamePattern = "%";
+        String[] tableTypes = new String[]{"MATERIALIZED VIEW"};
+        DatabaseMetaData metaData = cnx.getMetaData();
+        ResultSet tablesRS = metaData.getTables(catalog, schemaPattern, tableNamePattern, tableTypes);
+
+        List<String> listMaterializedViews = new ArrayList<>();
+        while (tablesRS.next()) {
+            String tableName = tablesRS.getString("TABLE_NAME");
+            String tableType = tablesRS.getString("TABLE_TYPE");
+            String remarks = tablesRS.getString("REMARKS");
+
+            listMaterializedViews.add(String.format("%s %s", tableName, (remarks == null ? "" : "(" + remarks + ")")));
+        }
+        return listMaterializedViews;
+    }
+
     public static boolean existsTable(final Connection cnx, final String schemaPattern, final String tableName) throws SQLException {
         if (tableName == null) {
             throw new IllegalArgumentException("tableName must not be null");

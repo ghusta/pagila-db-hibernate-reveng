@@ -97,6 +97,18 @@ public class ExtractMetadataTest {
         System.out.println(sequenceList);
         System.out.println();
 
+        List<String> viewList = ExtractMetadataUtil.getViewList(connection, currentSchema);
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES VIEWS ---"));
+        System.out.println(AnsiColor.colorize("SCHEMA => " + currentSchema, AnsiColor.FG_RED));
+        System.out.println(viewList);
+        System.out.println();
+
+        List<String> materializedViewList = ExtractMetadataUtil.getMaterializedViewList(connection, currentSchema);
+        System.out.println(AnsiColor.colorizeDefault("--- LISTE DES MATERIALIZED VIEWS ---"));
+        System.out.println(AnsiColor.colorize("SCHEMA => " + currentSchema, AnsiColor.FG_RED));
+        System.out.println(materializedViewList);
+        System.out.println();
+
         List<String> colsList;
 
         System.out.println(AnsiColor.colorizeDefault("--- LISTE DES COLONNES / TABLE ---"));
