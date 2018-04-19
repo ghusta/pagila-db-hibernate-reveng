@@ -265,15 +265,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Hibernate Tools -->
-        <!--<dependency>-->
-            <!--<groupId>org.hibernate</groupId>-->
-            <!--<artifactId>hibernate-tools</artifactId>-->
-            <!--<version>5.2.6.Final</version>-->
-            <!--<scope>compile</scope>-->
-            <!--<optional>true</optional>-->
-        <!--</dependency>-->
-
     </dependencies>
 
     <build>
@@ -438,15 +429,14 @@
                             <dependency>
                                 <groupId>org.postgresql</groupId>
                                 <artifactId>postgresql</artifactId>
-                                <version>42.2.1</version>
+                                <version>42.2.2</version>
                             </dependency>
 
                             <!-- Hib-Tools -->
                             <dependency>
                                 <groupId>org.hibernate</groupId>
                                 <artifactId>hibernate-tools</artifactId>
-                                <version>5.2.8.Final</version>
-                                <!--<version>5.2.4-SNAPSHOT</version>-->
+                                <version>5.2.10.Final</version>
                             </dependency>
 
                             <dependency>
