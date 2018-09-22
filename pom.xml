@@ -23,7 +23,7 @@
         <hibernate.version>5.2.17.Final</hibernate.version>
 
         <spring-framework.version>5.1.0.RELEASE</spring-framework.version>
-        <spring-data-release-train.version>Kay-SR10</spring-data-release-train.version>
+        <spring-data-release-train.version>Lovelace-RELEASE</spring-data-release-train.version>
         <querydsl.version>4.2.1</querydsl.version>
 
         <slf4j.version>1.7.25</slf4j.version>
